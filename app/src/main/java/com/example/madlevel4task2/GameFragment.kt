@@ -130,7 +130,24 @@ class GameFragment : Fragment() {
             gameResults.clear()
             gameResults.add(recentGame)
             gameResultAdapter.notifyDataSetChanged()
+
+            updateTextResults(recentGame)
         }
+    }
+
+    private fun updateTextResults(game:GameResult) {
+        var textToShow = getText(R.string.round_draw)
+
+        if (game.result == GameState.WIN)
+            textToShow = getText(R.string.round_win)
+        else if (game.result == GameState.LOSE)
+            textToShow = getText(R.string.round_lose)
+        else if (game.result == GameState.DRAW)
+            textToShow = getText(R.string.round_draw)
+
+        tv_result.text = textToShow;
+
+        // Statistics probably go here
     }
 
 }

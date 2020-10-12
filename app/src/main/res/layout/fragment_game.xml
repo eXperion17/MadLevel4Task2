@@ -25,7 +25,7 @@
         android:layout_width="156dp"
         android:layout_height="27dp"
         android:layout_marginTop="172dp"
-        android:text="@string/player_win"
+        android:text="@string/round_win"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
