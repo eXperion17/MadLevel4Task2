@@ -13,6 +13,10 @@ public class GameResultRepository(context: Context) {
         return gameResultDao.getAllGameResults();
     }
 
+    suspend fun getRecentGameResult(): GameResult {
+        return gameResultDao.getRecentGameResult();
+    }
+
     suspend fun insertGameResult(reminder: GameResult) {
         gameResultDao.insertGameResult(reminder);
     }

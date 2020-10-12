@@ -3,16 +3,19 @@ package com.example.madlevel4task2
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.item_gameresult.view.*
 
 class GameResultAdapter(private val gameResult:List<GameResult>) : RecyclerView.Adapter<GameResultAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //val binding = ItemReminderBinding.bind(itemView);
 
-        fun databind(reminder: GameResult) {
-            //binding.tvReminder.text = reminder.reminderText;
-            //itemView.tvReminder.text = reminder.reminderText;
+        fun databind(result: GameResult) {
+            itemView.iv_handcomputer.setImageResource(getDrawableFromGameMove(result.computer))
+            itemView.iv_handplayer.setImageResource(getDrawableFromGameMove(result.player))
+
+            // TODO: Add win/loss to the GameFragment since that is seperate
         }
     }
 
@@ -31,4 +34,20 @@ class GameResultAdapter(private val gameResult:List<GameResult>) : RecyclerView.
         holder.databind(gameResult[position])
     }
 
+    @DrawableRes
+    private fun getDrawableFromGameMove(move:GameMove):Int {
+        // Resorted to using if statements because Kotlin doesn't have switches & it feels like
+        // adding a lot of extra space for the same end result.
+        if (move == GameMove.ROCK) {
+            return R.drawable.rock;
+        }
+        else if (move == GameMove.PAPER) {
+            return R.drawable.paper;
+        } else if (move == GameMove.SCISSORS) {
+            return R.drawable.scissors;
+        }
+
+        // Probably needs a more obvious sign that says 'error'
+        return R.drawable.ic_delete_white_24dp
+    }
 }
