@@ -5,13 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_history.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class HistoryFragment : Fragment() {
+    private lateinit var gameResultRepository: GameResultRepository;
+    private val mainScope = CoroutineScope(Dispatchers.Main)
+
+    private val gameResults = arrayListOf<GameResult>()
+    private val gameResultExpandedAdapter = GameResultExpandedAdapter(gameResults);
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -24,8 +35,36 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*view.findViewById<Button>(R.id.button_second).setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }*/
+        gameResultRepository = GameResultRepository(requireContext().applicationContext)
+
+        getGameResultsFromDatabase()
+
+        initViews()
+    }
+
+    private fun getGameResultsFromDatabase() {
+        mainScope.launch {
+            val allGameResults = withContext(Dispatchers.IO) {
+                gameResultRepository.getAllGameResults()
+            }
+            gameResults.clear()
+            gameResults.addAll(allGameResults)
+            gameResultExpandedAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun initViews() {
+        rv_gameresults.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
+        rv_gameresults.adapter = gameResultExpandedAdapter
+        rv_gameresults.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+    }
+
+    public fun deleteAllGameResults() {
+        mainScope.launch {
+            withContext(Dispatchers.IO) {
+                gameResultRepository.deleteGameResults()
+                gameResultExpandedAdapter.notifyDataSetChanged()
+            }
+        }
     }
 }

@@ -5,21 +5,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_gameresult.view.*
+import kotlinx.android.synthetic.main.item_gameresultexpanded.view.*
 
-class GameResultAdapter(private val gameResult:List<GameResult>) : RecyclerView.Adapter<GameResultAdapter.ViewHolder>() {
+class GameResultExpandedAdapter(private val gameResult:List<GameResult>) : RecyclerView.Adapter<GameResultExpandedAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun databind(result: GameResult) {
             itemView.iv_handcomputer.setImageResource(getDrawableFromGameMove(result.computer))
             itemView.iv_handplayer.setImageResource(getDrawableFromGameMove(result.player))
+            itemView.tv_result.text = result.result.toString()
+            itemView.tv_date.text = result.date.toString()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate((R.layout.item_gameresult), parent, false)
+            LayoutInflater.from(parent.context).inflate((R.layout.item_gameresultexpanded), parent, false)
         );
     }
 

@@ -43,7 +43,7 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gameResultRepository = GameResultRepository(requireContext())
+        gameResultRepository = GameResultRepository(requireContext().applicationContext)
 
         ib_rock.setOnClickListener {
             playGame(GameMove.ROCK)
@@ -76,28 +76,22 @@ class GameFragment : Fragment() {
 
         if (computerMove == GameMove.SCISSORS) {
             if (player == GameMove.PAPER) {
-                // Lose
                 result = GameState.LOSE
             } else if  (player == GameMove.ROCK) {
-                // Win
                 result = GameState.WIN
             }
         }
         else if (computerMove == GameMove.ROCK) {
             if (player == GameMove.SCISSORS) {
-                // Lose
                 result = GameState.LOSE
             } else if  (player == GameMove.PAPER) {
-                // Win
                 result = GameState.WIN
             }
         }
         else if (computerMove == GameMove.PAPER) {
             if (player == GameMove.ROCK) {
-                // Lose
                 result = GameState.LOSE
             } else if  (player == GameMove.SCISSORS) {
-                // Win
                 result = GameState.WIN
             }
         }
@@ -147,7 +141,7 @@ class GameFragment : Fragment() {
 
         tv_result.text = textToShow;
 
-        // Statistics probably go here
+        // Statistics update goes here
     }
 
 }
