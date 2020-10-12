@@ -1,9 +1,6 @@
 package com.example.madlevel4task2
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface GameResultDao {
@@ -12,12 +9,15 @@ interface GameResultDao {
     suspend fun getAllGameResults(): List<GameResult>
 
     @Insert
-    suspend fun insertGameResults(product: GameResult)
+    suspend fun insertGameResult(result: GameResult)
 
     @Delete
-    suspend fun deleteGameResults(product: GameResult)
+    suspend fun deleteGameResult(result: GameResult)
 
     @Query("DELETE FROM gameResult_table")
     suspend fun deleteAllGameResults()
+
+    @Update
+    suspend fun updateGameResult(result:GameResult)
 
 }

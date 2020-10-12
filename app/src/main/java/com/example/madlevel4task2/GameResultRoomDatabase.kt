@@ -7,7 +7,7 @@ import androidx.room.*
 @TypeConverters(Converters::class)
 abstract class GameResultRoomDatabase : RoomDatabase() {
 
-    abstract fun productDao(): GameResultDao
+    abstract fun gameResultDao(): GameResultDao
 
     companion object {
         private const val DATABASE_NAME = "GAME_RESULT_DATABASE"
