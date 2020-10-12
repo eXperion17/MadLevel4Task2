@@ -20,7 +20,7 @@ interface GameResultDao {
     @Update
     suspend fun updateGameResult(result:GameResult)
 
-    @Query( "SELECT * FROM gameResult_table order by Date limit 1")
+    @Query( "SELECT * FROM gameResult_table order by Date DESC limit 1")
     suspend fun getRecentGameResult() : GameResult
 
 }
