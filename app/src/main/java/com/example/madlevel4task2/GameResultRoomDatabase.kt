@@ -1,11 +1,10 @@
 package com.example.madlevel4task2
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 
 @Database(entities = [GameResult::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class GameResultRoomDatabase : RoomDatabase() {
 
     abstract fun productDao(): GameResultDao
