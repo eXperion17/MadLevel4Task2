@@ -9,12 +9,12 @@ enum class GameMove {
     ROCK, PAPER, SCISSORS
 }
 
-enum class GameResult {
+enum class GameState {
     WIN, LOSE, DRAW
 }
 
-@Entity(tableName = "room_table")
-data class Room (
+@Entity(tableName = "gameResult_table")
+data class GameResult (
     @ColumnInfo(name = "date")
     var date:Date,
 
@@ -25,7 +25,7 @@ data class Room (
     var player:GameMove,
 
     @ColumnInfo(name = "result")
-    var result:GameResult,
+    var result: GameState,
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
