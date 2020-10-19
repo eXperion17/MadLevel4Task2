@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class HistoryFragment : Fragment() {
-    private lateinit var gameResultRepository: GameResultRepository;
+    private lateinit var gameResultRepository: GameResultRepository
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
     private val gameResults = arrayListOf<GameResult>()

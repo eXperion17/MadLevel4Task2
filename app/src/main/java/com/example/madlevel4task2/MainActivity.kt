@@ -7,16 +7,26 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.WebViewFragment
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.findFragment
 import androidx.navigation.findNavController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     private var currentFragment: Int = R.id.gameFragment;
+
+    private lateinit var gameResultRepository: GameResultRepository
+    private val mainScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
+
+        gameResultRepository = GameResultRepository(applicationContext)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -50,8 +60,12 @@ class MainActivity : AppCompatActivity() {
             currentFragment = R.id.gameFragment
             invalidateOptionsMenu()
         } else if (item.itemId == R.id.action_delete) {
-            //var fragment: HistoryFragment = supportFragmentManager.findFragmentById(R.id.historyFragment) as HistoryFragment
-            //fragment.deleteAllGameResults()
+            // TODO: Unsure of how to call .notifyDataSetChanged() on the adapter from here
+            mainScope.launch {
+                withContext(Dispatchers.IO) {
+                    gameResultRepository.deleteGameResults()
+                }
+            }
         }
 
         return true
